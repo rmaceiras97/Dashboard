@@ -25,16 +25,24 @@ export default function DashboardPage() {
     if (!token && storedToken) {
       try {
         const payload = JSON.parse(atob(storedToken.split('.')[1]));
-        setAuth({ email: payload.email, nombre: payload.nombre }, storedToken);
+        setAuth({ email: payload.email, nombre: payload.nombre, clienteNombre: payload.clienteNombre || '' }, storedToken);
       } catch {
         navigate('/login');
         return;
       }
     }
 
-    api.get('/conversations')
-      .then(({ data }) => setConversations(data.conversations))
-      .catch(console.error);
+    function fetchConversations() {
+      api.get('/conversations')
+        .then(({ data }) => setConversations(data.conversations))
+        .catch(console.error);
+    }
+
+    fetchConversations();
+
+    // Polling cada 15s — compensa que en local el webhook va a Railway y el socket no llega
+    const interval = setInterval(fetchConversations, 15000);
+    return () => clearInterval(interval);
   }, []);
 
   return (

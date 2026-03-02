@@ -4,10 +4,11 @@ import api from '../api/client.js';
 import useStore from '../store/useStore.js';
 
 export default function LoginPage() {
-  const [email, setEmail]       = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError]       = useState('');
-  const [loading, setLoading]   = useState(false);
+  const [email, setEmail]           = useState('');
+  const [password, setPassword]     = useState('');
+  const [showPassword, setShowPass] = useState(false);
+  const [error, setError]           = useState('');
+  const [loading, setLoading]       = useState(false);
   const setAuth   = useStore((s) => s.setAuth);
   const navigate  = useNavigate();
 
@@ -46,14 +47,34 @@ export default function LoginPage() {
             required
             className="w-full px-4 py-3 bg-[#2a3942] text-[#e9edef] rounded-lg border border-[#3b4a54] focus:border-[#00a884] focus:outline-none placeholder-[#8696a0] text-sm"
           />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-3 bg-[#2a3942] text-[#e9edef] rounded-lg border border-[#3b4a54] focus:border-[#00a884] focus:outline-none placeholder-[#8696a0] text-sm"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-3 pr-11 bg-[#2a3942] text-[#e9edef] rounded-lg border border-[#3b4a54] focus:border-[#00a884] focus:outline-none placeholder-[#8696a0] text-sm"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPass((v) => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8696a0] hover:text-[#e9edef] transition-colors"
+              tabIndex={-1}
+            >
+              {showPassword ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9-4-9-7s4-7 9-7c1.07 0 2.1.18 3.06.51M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              )}
+            </button>
+          </div>
           {error && <p className="text-red-400 text-sm text-center">{error}</p>}
           <button
             type="submit"

@@ -25,6 +25,23 @@ export default function ChatView() {
     if (conversation?.modo) {
       setSelectedMode(conversation.modo);
     }
+
+    // Polling mensajes cada 10s — el socket en local no recibe eventos de Railway
+    const interval = setInterval(() => {
+      const { messages: current, addMessage } = useStore.getState();
+      const lastTs = current[current.length - 1]?.created_at;
+      if (!lastTs) return;
+
+      api.get(`/conversations/${selectedId}/messages`)
+        .then(({ data }) => {
+          // Agregar solo los mensajes más nuevos que el último que tenemos
+          const newMsgs = data.messages.filter(m => m.created_at > lastTs);
+          newMsgs.forEach(m => addMessage(m, selectedId));
+        })
+        .catch(() => {});
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, [selectedId]);
 
   async function loadMore() {
