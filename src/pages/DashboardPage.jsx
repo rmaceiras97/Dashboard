@@ -46,7 +46,7 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="h-screen bg-[#111b21] flex overflow-hidden">
+    <div className="h-[100dvh] bg-[#111b21] flex overflow-hidden">
       {/* Sidebar: visible siempre en desktop; en móvil solo cuando no hay chat abierto */}
       <div className={`${selectedId ? 'hidden md:flex' : 'flex'} w-full md:w-[360px] md:min-w-[280px] md:max-w-[360px] h-full flex-shrink-0`}>
         <Sidebar />
