@@ -62,7 +62,7 @@ export default function ChatView() {
   if (!conversation) return null;
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b1014] min-w-0 overflow-hidden">
+    <div className="flex-1 flex flex-col min-w-0 overflow-hidden" style={{ background: 'transparent' }}>
       <ChatHeader conversation={conversation} />
       {conversation.resumen && <ResumenBanner resumen={conversation.resumen} />}
       <MessageList onLoadMore={loadMore} />
@@ -73,9 +73,15 @@ export default function ChatView() {
 
 function ResumenBanner({ resumen }) {
   return (
-    <div className="mx-3 mt-2 px-3 py-2 bg-[#1f2c33] border border-[#2a3942] rounded-lg flex gap-2 items-start flex-shrink-0">
-      <span className="text-[#00a884] text-sm flex-shrink-0">📋</span>
-      <p className="text-[#8696a0] text-xs leading-relaxed line-clamp-2">{resumen}</p>
+    <div
+      className="mx-3 mt-2 px-3 py-2 rounded-xl flex gap-2 items-start flex-shrink-0"
+      style={{
+        background: 'rgba(237,142,6,0.08)',
+        border: '1px solid rgba(237,142,6,0.2)',
+      }}
+    >
+      <span className="text-[#ED8E06] text-sm flex-shrink-0">📋</span>
+      <p className="text-[#94a3b8] text-xs leading-relaxed line-clamp-2">{resumen}</p>
     </div>
   );
 }
