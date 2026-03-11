@@ -50,7 +50,10 @@ export default function MessageList({ onLoadMore }) {
   if (!messagesLoaded) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-[#00a884] border-t-transparent rounded-full animate-spin" />
+        <div
+          className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"
+          style={{ borderColor: '#ED8E06', borderTopColor: 'transparent' }}
+        />
       </div>
     );
   }
@@ -58,7 +61,7 @@ export default function MessageList({ onLoadMore }) {
   if (messages.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <p className="text-[#8696a0] text-sm">Sin mensajes aún</p>
+        <p className="text-[#475569] text-sm">Sin mensajes aún</p>
       </div>
     );
   }
@@ -70,10 +73,19 @@ export default function MessageList({ onLoadMore }) {
           <button
             onClick={handleLoadMore}
             disabled={loadingMore}
-            className="flex items-center gap-2 text-xs text-[#8696a0] hover:text-[#e9edef] bg-[#1f2c33] hover:bg-[#2a3942] px-4 py-2 rounded-full transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 text-xs text-[#64748b] hover:text-[#f1f5f9] px-4 py-2 rounded-full transition-all duration-200 disabled:opacity-50"
+            style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.10)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.11)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; }}
           >
             {loadingMore ? (
-              <span className="w-3 h-3 border border-[#8696a0] border-t-transparent rounded-full animate-spin" />
+              <span
+                className="w-3 h-3 border border-t-transparent rounded-full animate-spin"
+                style={{ borderColor: '#64748b', borderTopColor: 'transparent' }}
+              />
             ) : (
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />

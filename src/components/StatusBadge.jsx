@@ -5,11 +5,14 @@ export default function StatusBadge({ mode, size = 'sm' }) {
     : 'text-xs px-2 py-0.5';
 
   return (
-    <span className={`${base} rounded-full font-medium flex-shrink-0 ${
-      isHuman
-        ? 'bg-blue-900/50 text-blue-300'
-        : 'bg-emerald-900/50 text-emerald-400'
-    }`}>
+    <span
+      className={`${base} rounded-full font-medium flex-shrink-0`}
+      style={
+        isHuman
+          ? { background: 'rgba(59,130,246,0.15)', color: '#93c5fd', border: '1px solid rgba(59,130,246,0.2)' }
+          : { background: 'rgba(237,142,6,0.15)', color: '#ED8E06', border: '1px solid rgba(237,142,6,0.2)' }
+      }
+    >
       {isHuman ? '👤' : '🤖'}
     </span>
   );

@@ -21,38 +21,64 @@ export default function ConversationItem({ conversation }) {
   return (
     <button
       onClick={handleClick}
-      className={`w-full flex items-center gap-3 px-3 py-3 hover:bg-[#2a3942] transition-colors text-left border-b border-[#1f2c33] ${
-        isSelected ? 'bg-[#2a3942]' : ''
-      }`}
+      className="w-full flex items-center gap-3 px-3 py-3 text-left transition-all duration-150"
+      style={{
+        background: isSelected ? 'rgba(237,142,6,0.10)' : 'transparent',
+        borderLeft: isSelected ? '2px solid #ED8E06' : '2px solid transparent',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        paddingLeft: isSelected ? '10px' : '12px',
+      }}
+      onMouseEnter={(e) => {
+        if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+      }}
+      onMouseLeave={(e) => {
+        if (!isSelected) e.currentTarget.style.background = 'transparent';
+      }}
     >
       {/* Avatar */}
-      <div className={`w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white text-base ${
-        isHuman ? 'bg-blue-600' : 'bg-[#00a884]'
-      }`}>
+      <div
+        className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white text-base"
+        style={{
+          background: isHuman
+            ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
+            : 'linear-gradient(135deg, #ED8E06, #f59e0b)',
+          boxShadow: isHuman
+            ? '0 2px 10px rgba(59,130,246,0.3)'
+            : '0 2px 10px rgba(237,142,6,0.35)',
+        }}
+      >
         {name.charAt(0).toUpperCase()}
       </div>
 
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
-          <span className="text-[#e9edef] text-sm font-medium truncate pr-2">{name}</span>
-          <span className="text-[#8696a0] text-[11px] flex-shrink-0">{formatTime(time)}</span>
+          <span className="text-[#f1f5f9] text-sm font-medium truncate pr-2">{name}</span>
+          <span className="text-[#475569] text-[11px] flex-shrink-0">{formatTime(time)}</span>
         </div>
         <div className="flex items-center justify-between mt-0.5 gap-2">
-          <p className={`text-xs truncate ${unread > 0 ? 'text-[#e9edef] font-medium' : 'text-[#8696a0]'}`}>
+          <p className={`text-xs truncate ${unread > 0 ? 'text-[#f1f5f9] font-medium' : 'text-[#64748b]'}`}>
             {preview}
           </p>
           <div className="flex items-center gap-1.5 flex-shrink-0">
             {/* Badge de no leídos */}
             {unread > 0 && (
-              <span className="min-w-[18px] h-[18px] rounded-full bg-[#00a884] text-white text-[10px] font-bold flex items-center justify-center px-1">
+              <span
+                className="min-w-[18px] h-[18px] rounded-full text-white text-[10px] font-bold flex items-center justify-center px-1"
+                style={{ background: '#ED8E06', boxShadow: '0 0 8px rgba(237,142,6,0.5)' }}
+              >
                 {unread > 99 ? '99+' : unread}
               </span>
             )}
             {/* Modo IA / Humano */}
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
-              isHuman ? 'bg-blue-900/50 text-blue-300' : 'bg-emerald-900/40 text-emerald-400'
-            }`}>
+            <span
+              className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
+              style={
+                isHuman
+                  ? { background: 'rgba(59,130,246,0.15)', color: '#93c5fd', border: '1px solid rgba(59,130,246,0.2)' }
+                  : { background: 'rgba(237,142,6,0.15)', color: '#ED8E06', border: '1px solid rgba(237,142,6,0.2)' }
+              }
+            >
               {isHuman ? '👤' : '🤖'}
             </span>
           </div>

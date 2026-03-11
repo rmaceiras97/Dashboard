@@ -70,11 +70,19 @@ export default function ChatHeader({ conversation }) {
   }
 
   return (
-    <div className="flex items-center px-3 py-3 bg-[#1f2c33] border-b border-[#2a3942] flex-shrink-0 gap-2">
+    <div
+      className="flex items-center px-3 py-3 flex-shrink-0 gap-2"
+      style={{
+        background: 'rgba(255,255,255,0.06)',
+        backdropFilter: 'blur(32px)',
+        WebkitBackdropFilter: 'blur(32px)',
+        borderBottom: '1px solid rgba(255,255,255,0.10)',
+      }}
+    >
       {/* Botón volver — solo móvil */}
       <button
         onClick={() => selectConversation(null)}
-        className="md:hidden text-[#8696a0] hover:text-[#e9edef] p-1 flex-shrink-0"
+        className="md:hidden text-[#64748b] hover:text-[#f1f5f9] p-1 flex-shrink-0 transition-colors"
         aria-label="Volver"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,9 +91,17 @@ export default function ChatHeader({ conversation }) {
       </button>
 
       {/* Avatar */}
-      <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white ${
-        isHuman ? 'bg-blue-600' : 'bg-[#00a884]'
-      }`}>
+      <div
+        className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white"
+        style={{
+          background: isHuman
+            ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
+            : 'linear-gradient(135deg, #ED8E06, #f59e0b)',
+          boxShadow: isHuman
+            ? '0 2px 12px rgba(59,130,246,0.35)'
+            : '0 2px 12px rgba(237,142,6,0.4)',
+        }}
+      >
         {name.charAt(0).toUpperCase()}
       </div>
 
@@ -99,28 +115,38 @@ export default function ChatHeader({ conversation }) {
             onKeyDown={handleNameKeyDown}
             onBlur={handleSaveName}
             disabled={savingName}
-            className="bg-[#2a3942] text-[#e9edef] text-sm px-2 py-0.5 rounded border border-[#00a884] focus:outline-none w-40 max-w-full"
+            className="text-[#f1f5f9] text-sm px-2 py-0.5 rounded-lg focus:outline-none w-40 max-w-full"
+            style={{
+              background: 'rgba(255,255,255,0.08)',
+              border: '1px solid rgba(237,142,6,0.55)',
+              boxShadow: '0 0 0 3px rgba(237,142,6,0.10)',
+            }}
           />
         ) : (
           <button
             onClick={() => setEditing(true)}
-            className="text-[#e9edef] text-sm font-medium hover:text-white flex items-center gap-1 group max-w-full truncate"
+            className="text-[#f1f5f9] text-sm font-medium hover:text-white flex items-center gap-1 group max-w-full truncate transition-colors"
             title="Editar nombre"
           >
             <span className="truncate">{name}</span>
-            <svg className="w-3 h-3 text-[#8696a0] opacity-0 group-hover:opacity-100 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3 h-3 text-[#64748b] opacity-0 group-hover:opacity-100 flex-shrink-0 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
           </button>
         )}
-        <p className="text-[#8696a0] text-xs truncate">{phone}</p>
+        <p className="text-[#64748b] text-xs truncate">{phone}</p>
       </div>
 
       {/* Modo badge + botón control */}
       <div className="flex items-center gap-2 flex-shrink-0">
-        <span className={`hidden sm:inline text-xs px-2.5 py-1 rounded-full font-medium ${
-          isHuman ? 'bg-blue-900/60 text-blue-300' : 'bg-emerald-900/50 text-emerald-400'
-        }`}>
+        <span
+          className="hidden sm:inline text-xs px-2.5 py-1 rounded-full font-medium"
+          style={
+            isHuman
+              ? { background: 'rgba(59,130,246,0.15)', color: '#93c5fd', border: '1px solid rgba(59,130,246,0.2)' }
+              : { background: 'rgba(237,142,6,0.15)', color: '#ED8E06', border: '1px solid rgba(237,142,6,0.2)' }
+          }
+        >
           {isHuman ? '👤 Humano' : '🤖 IA'}
         </span>
 
@@ -128,7 +154,11 @@ export default function ChatHeader({ conversation }) {
           <button
             onClick={handleRelease}
             disabled={loading}
-            className="text-xs px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg transition-colors disabled:opacity-50 whitespace-nowrap"
+            className="text-xs px-3 py-1.5 text-white rounded-xl transition-all duration-200 disabled:opacity-50 whitespace-nowrap hover:scale-[1.03]"
+            style={{
+              background: 'linear-gradient(135deg, #ED8E06, #f59e0b)',
+              boxShadow: '0 0 16px rgba(237,142,6,0.35)',
+            }}
           >
             {loading ? '...' : 'Volver a IA'}
           </button>
@@ -136,7 +166,12 @@ export default function ChatHeader({ conversation }) {
           <button
             onClick={handleTakeover}
             disabled={loading}
-            className="text-xs px-3 py-1.5 bg-blue-700 hover:bg-blue-600 text-white rounded-lg transition-colors disabled:opacity-50 whitespace-nowrap"
+            className="text-xs px-3 py-1.5 text-white rounded-xl transition-all duration-200 disabled:opacity-50 whitespace-nowrap hover:scale-[1.03]"
+            style={{
+              background: 'rgba(59,130,246,0.2)',
+              border: '1px solid rgba(59,130,246,0.35)',
+              boxShadow: '0 0 16px rgba(59,130,246,0.2)',
+            }}
           >
             {loading ? '...' : 'Tomar control'}
           </button>

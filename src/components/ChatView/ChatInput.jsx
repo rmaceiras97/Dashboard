@@ -59,9 +59,20 @@ export default function ChatInput({ conversationId }) {
   // Si la IA está activa, mostrar estado en lugar del input
   if (!isHuman) {
     return (
-      <div className="px-4 py-3 bg-[#1f2c33] border-t border-[#2a3942] flex-shrink-0">
-        <div className="flex items-center justify-center gap-2 text-[#8696a0] text-sm">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+      <div
+        className="px-4 py-3 flex-shrink-0"
+        style={{
+          background: 'rgba(255,255,255,0.05)',
+          backdropFilter: 'blur(32px)',
+          WebkitBackdropFilter: 'blur(32px)',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
+        }}
+      >
+        <div className="flex items-center justify-center gap-2 text-[#64748b] text-sm">
+          <span
+            className="w-2 h-2 rounded-full animate-pulse"
+            style={{ background: '#ED8E06', boxShadow: '0 0 6px rgba(237,142,6,0.7)' }}
+          />
           IA respondiendo automáticamente — presiona "Tomar control" para intervenir
         </div>
       </div>
@@ -69,14 +80,28 @@ export default function ChatInput({ conversationId }) {
   }
 
   return (
-    <div className="bg-[#1f2c33] border-t border-[#2a3942] flex-shrink-0">
+    <div
+      className="flex-shrink-0"
+      style={{
+        background: 'rgba(255,255,255,0.05)',
+        backdropFilter: 'blur(32px)',
+        WebkitBackdropFilter: 'blur(32px)',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+      }}
+    >
       {/* Banner ventana */}
-      <div className={`px-4 py-1.5 text-xs flex items-center gap-1.5 ${
-        ventana.activa
-          ? 'bg-[#0d2a1f] text-[#25d366]'
-          : 'bg-[#2a1a1a] text-[#8696a0]'
-      }`}>
-        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${ventana.activa ? 'bg-[#25d366]' : 'bg-[#8696a0]'}`} />
+      <div
+        className="px-4 py-1.5 text-xs flex items-center gap-1.5"
+        style={
+          ventana.activa
+            ? { background: 'rgba(237,142,6,0.08)', color: '#ED8E06' }
+            : { background: 'rgba(255,255,255,0.04)', color: '#64748b' }
+        }
+      >
+        <span
+          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+          style={{ background: ventana.activa ? '#ED8E06' : '#475569' }}
+        />
         {ventana.activa && ventana.remainingSeconds !== null
           ? `Ventana abierta · ${formatTTL(ventana.remainingSeconds)} restantes`
           : ventana.activa
@@ -96,13 +121,33 @@ export default function ChatInput({ conversationId }) {
             placeholder={ventana.activa ? 'Escribe un mensaje...' : 'Ventana cerrada'}
             disabled={!ventana.activa}
             rows={1}
-            className="flex-1 bg-[#2a3942] text-[#e9edef] placeholder-[#8696a0] rounded-lg px-4 py-2.5 text-sm focus:outline-none resize-none max-h-32 overflow-y-auto disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ minHeight: '42px' }}
+            className="flex-1 text-[#f1f5f9] placeholder-[#475569] rounded-xl px-4 py-2.5 text-sm focus:outline-none resize-none max-h-32 overflow-y-auto disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+            style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.10)',
+              minHeight: '42px',
+            }}
+            onFocus={(e) => {
+              e.target.style.border = '1px solid rgba(237,142,6,0.50)';
+              e.target.style.boxShadow = '0 0 0 3px rgba(237,142,6,0.08)';
+            }}
+            onBlur={(e) => {
+              e.target.style.border = '1px solid rgba(255,255,255,0.10)';
+              e.target.style.boxShadow = 'none';
+            }}
           />
           <button
             onClick={handleSend}
             disabled={!texto.trim() || sending || !ventana.activa}
-            className="w-10 h-10 bg-[#00a884] hover:bg-[#06cf9c] disabled:bg-[#374045] disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-colors flex-shrink-0"
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
+            style={{
+              background: (!texto.trim() || sending || !ventana.activa)
+                ? 'rgba(255,255,255,0.08)'
+                : 'linear-gradient(135deg, #ED8E06, #f59e0b)',
+              boxShadow: (!texto.trim() || sending || !ventana.activa)
+                ? 'none'
+                : '0 0 18px rgba(237,142,6,0.45)',
+            }}
           >
             {sending ? (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -114,7 +159,7 @@ export default function ChatInput({ conversationId }) {
           </button>
         </div>
         {ventana.activa && (
-          <p className="text-[10px] text-[#8696a0] mt-1.5 px-1">
+          <p className="text-[10px] text-[#475569] mt-1.5 px-1">
             Enter para enviar · Shift+Enter para nueva línea
           </p>
         )}
