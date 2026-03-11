@@ -21,37 +21,20 @@ export default function ConversationItem({ conversation }) {
   return (
     <button
       onClick={handleClick}
-      className="w-full flex items-center gap-3 px-3 py-3 text-left transition-all duration-150"
-      style={{
-        background: isSelected ? 'rgba(237,142,6,0.10)' : 'transparent',
-        borderLeft: isSelected ? '2px solid #ED8E06' : '2px solid transparent',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
-        paddingLeft: isSelected ? '10px' : '12px',
-      }}
-      onMouseEnter={(e) => {
-        if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-      }}
-      onMouseLeave={(e) => {
-        if (!isSelected) e.currentTarget.style.background = 'transparent';
-      }}
+      className={`w-full flex items-center gap-3 py-3 text-left transition-all duration-150 hover:bg-white/[0.05] ${
+        isSelected ? 'glass-selected pl-[10px]' : 'pl-3'
+      }`}
+      style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}
     >
       {/* Avatar */}
-      <div
-        className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white text-base"
-        style={{
-          background: isHuman
-            ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
-            : 'linear-gradient(135deg, #ED8E06, #f59e0b)',
-          boxShadow: isHuman
-            ? '0 2px 10px rgba(59,130,246,0.3)'
-            : '0 2px 10px rgba(237,142,6,0.35)',
-        }}
-      >
+      <div className={`w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white text-base ${
+        isHuman ? 'avatar-human' : 'avatar-ai'
+      }`}>
         {name.charAt(0).toUpperCase()}
       </div>
 
       {/* Info */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 pr-3">
         <div className="flex items-center justify-between">
           <span className="text-[#f1f5f9] text-sm font-medium truncate pr-2">{name}</span>
           <span className="text-[#475569] text-[11px] flex-shrink-0">{formatTime(time)}</span>
@@ -71,14 +54,7 @@ export default function ConversationItem({ conversation }) {
               </span>
             )}
             {/* Modo IA / Humano */}
-            <span
-              className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
-              style={
-                isHuman
-                  ? { background: 'rgba(59,130,246,0.15)', color: '#93c5fd', border: '1px solid rgba(59,130,246,0.2)' }
-                  : { background: 'rgba(237,142,6,0.15)', color: '#ED8E06', border: '1px solid rgba(237,142,6,0.2)' }
-              }
-            >
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${isHuman ? 'badge-human' : 'badge-ai'}`}>
               {isHuman ? '👤' : '🤖'}
             </span>
           </div>

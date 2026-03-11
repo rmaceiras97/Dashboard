@@ -74,19 +74,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-xl text-[#f1f5f9] placeholder-[#475569] text-sm focus:outline-none transition-all duration-200"
-              style={{
-                background: 'rgba(255,255,255,0.07)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
-              onFocus={(e) => {
-                e.target.style.border = '1px solid rgba(237,142,6,0.55)';
-                e.target.style.boxShadow = '0 0 0 3px rgba(237,142,6,0.10)';
-              }}
-              onBlur={(e) => {
-                e.target.style.border = '1px solid rgba(255,255,255,0.10)';
-                e.target.style.boxShadow = 'none';
-              }}
+              className="glass-input w-full px-4 py-3 rounded-xl text-sm"
             />
             <div className="relative">
               <input
@@ -95,19 +83,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 pr-11 rounded-xl text-[#f1f5f9] placeholder-[#475569] text-sm focus:outline-none transition-all duration-200"
-                style={{
-                  background: 'rgba(255,255,255,0.07)',
-                  border: '1px solid rgba(255,255,255,0.10)',
-                }}
-                onFocus={(e) => {
-                  e.target.style.border = '1px solid rgba(237,142,6,0.55)';
-                  e.target.style.boxShadow = '0 0 0 3px rgba(237,142,6,0.10)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.border = '1px solid rgba(255,255,255,0.10)';
-                  e.target.style.boxShadow = 'none';
-                }}
+                className="glass-input w-full px-4 py-3 pr-11 rounded-xl text-sm"
               />
               <button
                 type="button"

@@ -26,21 +26,13 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="w-full h-full flex flex-col"
-      style={{
-        background: 'rgba(255,255,255,0.04)',
-        backdropFilter: 'blur(32px)',
-        WebkitBackdropFilter: 'blur(32px)',
-        borderRight: '1px solid rgba(255,255,255,0.08)',
-      }}
+      className="glass w-full h-full flex flex-col"
+      style={{ borderRight: '1px solid rgba(255,255,255,0.08)', borderRadius: 0 }}
     >
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-3 flex-shrink-0"
-        style={{
-          background: 'rgba(255,255,255,0.06)',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-        }}
+        className="glass-md flex items-center justify-between px-4 py-3 flex-shrink-0"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', borderRadius: 0 }}
       >
         <div className="flex items-center gap-2.5">
           <img src="/logo.png" alt="DeepFrame Media" className="w-7 h-7 object-contain flex-shrink-0" />
@@ -56,12 +48,8 @@ export default function Sidebar() {
 
       {/* Search */}
       <div className="px-3 py-2 flex-shrink-0">
-        <div
-          className="flex items-center gap-2 rounded-xl px-3 py-2 transition-all duration-200"
-          style={{
-            background: 'rgba(255,255,255,0.07)',
-            border: '1px solid rgba(255,255,255,0.10)',
-          }}
+        <div className="search-wrapper flex items-center gap-2 rounded-xl px-3 py-2 transition-all duration-200"
+          style={{ background: 'rgba(255,255,255,0.07)' }}
         >
           <svg className="w-4 h-4 text-[#475569] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

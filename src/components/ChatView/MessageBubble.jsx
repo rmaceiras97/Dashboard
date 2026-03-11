@@ -30,32 +30,12 @@ export default function MessageBubble({ message }) {
   // Layout: user = izquierda, bot/agente = derecha
   const alignRight = isBot || isAgent;
 
-  const bubbleStyle = isUser
-    ? {
-        background: 'rgba(255,255,255,0.07)',
-        border: '1px solid rgba(255,255,255,0.10)',
-        color: '#f1f5f9',
-      }
-    : isAgent
-      ? {
-          background: 'rgba(59,130,246,0.18)',
-          border: '1px solid rgba(59,130,246,0.28)',
-          color: '#f1f5f9',
-        }
-      : {
-          background: 'rgba(237,142,6,0.14)',
-          border: '1px solid rgba(237,142,6,0.22)',
-          color: '#f1f5f9',
-        };
-
+  const bubbleClass = isUser ? 'bubble-user' : isAgent ? 'bubble-agent' : 'bubble-bot';
   const label = isAgent ? '👤 Agente' : isBot ? '🤖 Jarvis' : null;
 
   return (
     <div className={`flex ${alignRight ? 'justify-end' : 'justify-start'} mb-1`}>
-      <div
-        className="max-w-[75%] px-3 py-2 rounded-2xl shadow-sm"
-        style={bubbleStyle}
-      >
+      <div className={`max-w-[75%] px-3 py-2 rounded-2xl shadow-sm animate-bubble ${bubbleClass}`}>
         {/* Etiqueta de quien envía (solo para bot/agente) */}
         {label && (
           <p className="text-[10px] opacity-60 mb-1 font-medium">{label}</p>

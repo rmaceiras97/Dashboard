@@ -71,13 +71,8 @@ export default function ChatHeader({ conversation }) {
 
   return (
     <div
-      className="flex items-center px-3 py-3 flex-shrink-0 gap-2"
-      style={{
-        background: 'rgba(255,255,255,0.06)',
-        backdropFilter: 'blur(32px)',
-        WebkitBackdropFilter: 'blur(32px)',
-        borderBottom: '1px solid rgba(255,255,255,0.10)',
-      }}
+      className="glass-md flex items-center px-3 py-3 flex-shrink-0 gap-2"
+      style={{ borderBottom: '1px solid rgba(255,255,255,0.10)', borderRadius: 0 }}
     >
       {/* Botón volver — solo móvil */}
       <button
@@ -92,15 +87,9 @@ export default function ChatHeader({ conversation }) {
 
       {/* Avatar */}
       <div
-        className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white"
-        style={{
-          background: isHuman
-            ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
-            : 'linear-gradient(135deg, #ED8E06, #f59e0b)',
-          boxShadow: isHuman
-            ? '0 2px 12px rgba(59,130,246,0.35)'
-            : '0 2px 12px rgba(237,142,6,0.4)',
-        }}
+        className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-semibold text-white ring-2 ring-offset-1 ring-offset-transparent ${
+          isHuman ? 'avatar-human ring-blue-500/30' : 'avatar-ai ring-[#ED8E06]/30'
+        }`}
       >
         {name.charAt(0).toUpperCase()}
       </div>
@@ -115,12 +104,7 @@ export default function ChatHeader({ conversation }) {
             onKeyDown={handleNameKeyDown}
             onBlur={handleSaveName}
             disabled={savingName}
-            className="text-[#f1f5f9] text-sm px-2 py-0.5 rounded-lg focus:outline-none w-40 max-w-full"
-            style={{
-              background: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(237,142,6,0.55)',
-              boxShadow: '0 0 0 3px rgba(237,142,6,0.10)',
-            }}
+            className="glass-input text-sm px-2 py-0.5 rounded-lg w-40 max-w-full"
           />
         ) : (
           <button
@@ -139,14 +123,7 @@ export default function ChatHeader({ conversation }) {
 
       {/* Modo badge + botón control */}
       <div className="flex items-center gap-2 flex-shrink-0">
-        <span
-          className="hidden sm:inline text-xs px-2.5 py-1 rounded-full font-medium"
-          style={
-            isHuman
-              ? { background: 'rgba(59,130,246,0.15)', color: '#93c5fd', border: '1px solid rgba(59,130,246,0.2)' }
-              : { background: 'rgba(237,142,6,0.15)', color: '#ED8E06', border: '1px solid rgba(237,142,6,0.2)' }
-          }
-        >
+        <span className={`hidden sm:inline text-xs px-2.5 py-1 rounded-full font-medium ${isHuman ? 'badge-human' : 'badge-ai'}`}>
           {isHuman ? '👤 Humano' : '🤖 IA'}
         </span>
 

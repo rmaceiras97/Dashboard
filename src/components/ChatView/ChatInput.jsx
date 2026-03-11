@@ -59,15 +59,7 @@ export default function ChatInput({ conversationId }) {
   // Si la IA está activa, mostrar estado en lugar del input
   if (!isHuman) {
     return (
-      <div
-        className="px-4 py-3 flex-shrink-0"
-        style={{
-          background: 'rgba(255,255,255,0.05)',
-          backdropFilter: 'blur(32px)',
-          WebkitBackdropFilter: 'blur(32px)',
-          borderTop: '1px solid rgba(255,255,255,0.08)',
-        }}
-      >
+      <div className="glass-md px-4 py-3 flex-shrink-0" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderRadius: 0 }}>
         <div className="flex items-center justify-center gap-2 text-[#64748b] text-sm">
           <span
             className="w-2 h-2 rounded-full animate-pulse"
@@ -79,24 +71,18 @@ export default function ChatInput({ conversationId }) {
     );
   }
 
+  const canSend = texto.trim() && !sending && ventana.activa;
+
   return (
-    <div
-      className="flex-shrink-0"
-      style={{
-        background: 'rgba(255,255,255,0.05)',
-        backdropFilter: 'blur(32px)',
-        WebkitBackdropFilter: 'blur(32px)',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
-      }}
-    >
+    <div className="glass-md flex-shrink-0" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderRadius: 0 }}>
       {/* Banner ventana */}
       <div
-        className="px-4 py-1.5 text-xs flex items-center gap-1.5"
-        style={
+        className={`px-4 py-1.5 text-xs flex items-center gap-1.5 border-b ${
           ventana.activa
-            ? { background: 'rgba(237,142,6,0.08)', color: '#ED8E06' }
-            : { background: 'rgba(255,255,255,0.04)', color: '#64748b' }
-        }
+            ? 'text-[#ED8E06] border-[rgba(237,142,6,0.12)]'
+            : 'text-[#64748b] border-[rgba(255,255,255,0.06)]'
+        }`}
+        style={{ background: ventana.activa ? 'rgba(237,142,6,0.06)' : 'rgba(255,255,255,0.02)' }}
       >
         <span
           className="w-1.5 h-1.5 rounded-full flex-shrink-0"
@@ -121,36 +107,24 @@ export default function ChatInput({ conversationId }) {
             placeholder={ventana.activa ? 'Escribe un mensaje...' : 'Ventana cerrada'}
             disabled={!ventana.activa}
             rows={1}
-            className="flex-1 text-[#f1f5f9] placeholder-[#475569] rounded-xl px-4 py-2.5 text-sm focus:outline-none resize-none max-h-32 overflow-y-auto disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
-            style={{
-              background: 'rgba(255,255,255,0.07)',
-              border: '1px solid rgba(255,255,255,0.10)',
-              minHeight: '42px',
-            }}
-            onFocus={(e) => {
-              e.target.style.border = '1px solid rgba(237,142,6,0.50)';
-              e.target.style.boxShadow = '0 0 0 3px rgba(237,142,6,0.08)';
-            }}
-            onBlur={(e) => {
-              e.target.style.border = '1px solid rgba(255,255,255,0.10)';
-              e.target.style.boxShadow = 'none';
-            }}
+            className={`glass-input flex-1 rounded-xl px-4 py-2.5 text-sm resize-none max-h-32 overflow-y-auto transition-all duration-200 ${sending ? 'opacity-60 cursor-wait' : ''}`}
+            style={{ minHeight: '42px' }}
           />
           <button
             onClick={handleSend}
-            disabled={!texto.trim() || sending || !ventana.activa}
+            disabled={!canSend}
             className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
             style={{
-              background: (!texto.trim() || sending || !ventana.activa)
-                ? 'rgba(255,255,255,0.08)'
-                : 'linear-gradient(135deg, #ED8E06, #f59e0b)',
-              boxShadow: (!texto.trim() || sending || !ventana.activa)
-                ? 'none'
-                : '0 0 18px rgba(237,142,6,0.45)',
+              background: canSend ? 'linear-gradient(135deg, #ED8E06, #f59e0b)' : 'rgba(255,255,255,0.08)',
+              boxShadow: canSend ? '0 0 18px rgba(237,142,6,0.45)' : 'none',
             }}
           >
             {sending ? (
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span className="flex items-center gap-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-white dot-1" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white dot-2" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white dot-3" />
+              </span>
             ) : (
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
